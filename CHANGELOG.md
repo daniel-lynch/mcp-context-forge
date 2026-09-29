@@ -7,6 +7,13 @@
 - Rust MCP runtime sidecar, Rust A2A runtime sidecar, and ValidationMiddleware are deprecated as of 2026-06-11 and will sunset on 2026-07-07. Use the Python MCP transport path, the Python A2A invocation path, and endpoint-level Pydantic or protocol-specific validation instead. See [Deprecations](docs/docs/deprecations.md).
 
 
+## [Unreleased]
+
+### Fixed
+
+- **Modern MCP clients no longer see the deprecated logging capability** ([#6630](https://github.com/IBM/mcp-context-forge/issues/6630), [#6631](https://github.com/IBM/mcp-context-forge/issues/6631)) - `server/discover` responses for `2026-07-28` clients now omit `capabilities.logging`. MCP 2026-07-28 deprecates that capability (SEP-2577), and ContextForge sends no request-scoped log messages. Clients on `2025-11-25` and older still receive the capability and can call `logging/setLevel`. Use OpenTelemetry and structured logging for gateway observability. Modern clients reach the gateway only when `MCP_INBOUND_PROTOCOL_MODE=auto`; `docker-compose.yml` now passes that variable to the gateway, with a `legacy` default.
+
+
 ## [1.0.11] - 2026-09-28 - MCP Python SDK 2.x, Tool Preview, SSO Controls, and Live E2E Coverage
 
 ### Overview
